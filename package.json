@@ -1,6 +1,6 @@
 {
   "name": "vueuistepper.loc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vue 3 Курс (От Владилена Минина) - Курсовая №1",
   "main": "vue.js",
   "scripts": {
