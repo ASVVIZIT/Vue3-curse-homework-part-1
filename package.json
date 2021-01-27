@@ -1,0 +1,22 @@
+{
+  "name": "vueuistepper.loc",
+  "version": "1.0.0",
+  "description": "Vue 3 Курс (От Владилена Минина) - Курсовая №1",
+  "main": "vue.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ASVVIZIT/Vue3-curse-homework-part-1.git"
+  },
+  "keywords": [
+    "Vue3"
+  ],
+  "author": "Sergey Andrianov <dillerasvasviner@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ASVVIZIT/Vue3-curse-homework-part-1/issues"
+  },
+  "homepage": "https://github.com/ASVVIZIT/Vue3-curse-homework-part-1#readme"
+}

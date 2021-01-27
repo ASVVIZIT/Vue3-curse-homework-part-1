@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="meta" v-cloak>{{titleHeader}}</title> <!-- не работает-->
+    <link rel="stylesheet" href="theme.css" />
+    <link rel="stylesheet" href="system.css" />
+  </head>
+  <body>
+  <div class="container grid" id="app" v-cloak>
+    <div class="card">
+      <h1>{{titleApp}}</h1>
+      <div class="steps">
+        <ul
+            class="steps-list"
+        >
+          <li
+             v-for="(step, idx) in steps"
+             :key="step"
+             :id="idx"
+             class="steps-item"
+             :class="setClass(idx, step)"
+             @click.left="setActive(idx, step, $event), selectStepSliceElements(idx, step)"
+          >
+            <div class="steps-scale"><span>{{idx+1}}</span></div>
+            {{step.title}}
+          </li>
+        </ul>
+        <div>
+          <button v-if="isVisibleBtnPrev" :disabled="isDisabledBtnPrev" ref="refBtnPrev" :title="btnPrev.btnTitle" @click.left="prev()" class="btn">{{btnPrev.btnText}}</button>
+          <button :title="toggleBtnNextOfFinish.titleBtn" @click.left="nextOfFinish()" class="btn primary" >{{toggleBtnNextOfFinish.textBtn}}</button>
+        </div>
+        <hr v-if="isContentNotEmpty" />
+        <div v-if="isContentNotEmpty" class="steps-content">
+          <div v-if="isTitleStepNotEmpty">
+            <div><span ref="titleStep"><b>{{chapterSteps}}: </b></span>{{titleStep}}</div>
+          </div>
+          <hr v-if="isTitleStepNotEmpty" />
+          <div v-if="isTextStepNotEmpty">
+            <div ref="textStep">{{textStep}}</div>
+          </div>
+          <div v-else-if="!isTextStepNotEmpty">
+            <div ref="textStep">{{emptyStep}}</div>
+          </div>
+          <hr v-if="isTextStepNotEmpty" />
+        </div>
+        <div v-else-if="!isContentNotEmpty">
+            <h3>{{emptyStep}}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>{{titleAppDebug}}</h3>
+      <div id="block_debug_main_1" class="pre">
+        <pre class="default" title="Статус кнопки: 'nextOfFinishMode', есть два положения Next и Finish">nextOfFinishMode: {{nextOfFinishMode}}</pre>
+        <pre class="default" title="Статус приложения: 'statusComponent', есть два положения Learning и Done">statusComponent: {{statusComponent}}</pre>
+        <pre class="default" title="Вывод переменной индекса активного блока обучения: 'activeIndex'">activeIndex: {{activeIndex}}</pre>
+      </div>
+      <div id="block_debug_main_2" class="pre">
+        <pre class="default" title="Массив пройденых блоков обучения: 'stepsSelected' ">stepsSelected: {{stepsSelected.length}}</pre>
+          <div class="pre_overflow">
+            <div id="block_debug_main_2_1" class="overflow">
+                <pre class="custom" title="Массив пройденых блоков обучения: 'stepsSelected' ">{{stepsSelectedStringify}}</pre>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="vue.js"></script>
+  </body>
+</html>
