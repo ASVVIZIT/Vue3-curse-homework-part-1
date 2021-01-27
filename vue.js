@@ -18,18 +18,18 @@ const App = {
             titleApp: 'План по изучению Vue.js',
             titleAppDebug: 'Панель отладки',
             chapterSteps: 'Глава',
-            nextOfFinishMode: 'Next',
-            statusComponent: 'Learning',
+            nextOfFinishMode: 'Next', // Режим кнопки Next/Finish
+            statusComponent: 'Learning', // Статус приложения\компонента Learning/Done - Идет обучение/обучение завершено
             btnNewLearning: {
                 btnText: 'Начать заново',
                 btnTitle: 'Пройти обучение заново?'
             },
-            btnNextOfFinish: {
-                btnDefault: {
+            btnNextOfFinish: { // У кнопки есть два режима
+                btnDefault: { // Default\Вперед
                     btnText: 'Вперед',
                     btnTitle: 'Перейти на шаг Вперёд.'
                 },
-                btnFinish: {
+                btnFinish: { // Finish\Закончить
                     btnText: 'Закончить',
                     btnTitle: 'Закончить план по изучению.'
                 }
@@ -60,7 +60,7 @@ const App = {
                     text: 'В данном блоке вы узнаете все о том, как работает мультиязычность во Vue. Мы создадим миниклон Gmail в данном блоке, где вы на практике увидите как работать с динамическим роутером.'
                 },
                 {
-                  title: 'пусто',
+                  title: 'пусто', // Добавлен для примера, если нет текста, то выводиться текст свойства 'emptyStep'
                 },
                 {
                     title: 'Vuex',
@@ -71,15 +71,16 @@ const App = {
                     text: 'Одним из наиболее важных обновлений в Vue 3 является появление альтернативного синтаксиса Composition API. В этом блоке вы узнаете все, чтобы полностью пользоваться данными синтаксисом на практических примерах. Помимо этого вы узнаете как работать совместно с Vue Router и Vuex.'
                 },
                 {
-                  title: 'Финиш',
+                  title: 'Финиш', // Добавлен для примера, если нет текста, то выводиться текст свойства 'emptyStep'
                 }
             ],
             emptyStep: 'На данном шаге не указана информация, обратитесь к администратору',
             titleStep: '',
             textStep: '',
-            stepsSelected: [],
-            stepsSelectedStringify: [],
-            replacerText: null,
+            stepsSelected: [], // Массив текущего состояния
+            stepsSelectedStringify: [], // Массив для отладки
+            replacer: null,
+            replacerText: '...',
             spaceText: ' '
         }
     },
@@ -99,7 +100,9 @@ const App = {
         },
         reset() {
             // начать заново
-            this.selectedFirstSteps()
+            this.activeIndex = 0
+            this.statusComponent = 'Learning'
+            this.selectedFirstSteps() // Высталяем первый пункт выбранным
         },
         selectedFirstSteps() {
             this.stepsSelected = this.steps.slice(this.selectStep, this.selectStep + 1)
@@ -134,9 +137,7 @@ const App = {
                     }
                 }
             } else {
-                this.activeIndex = 0
                 this.reset()
-                this.statusComponent = 'Learning'
             }
         },
         setActive(idx, step, $event = undefined) {
@@ -178,14 +179,14 @@ const App = {
         },
         selectStepSliceElements(idx, step) {
             idx = this.selectStep
-            console.log('------- this.stepsSelected.includes(step) до: ', this.stepsSelected.includes(step))
+            // console.log('------- this.stepsSelected.includes(step) до if: ', this.stepsSelected.includes(step))
             if (this.stepsSelected.includes(step) && (this.stepsSelected.length === idx)) {
-                console.log('(v1) this.stepsSelected.includes(step): ', this.stepsSelected.includes(step))
-                console.log('(v1) this.stepsSelected.length === idx+1 ', idx, ' + step: ', step)
+                console.log('(v1) this.stepsSelected.includes(step): полсе', this.stepsSelected.includes(step))
+                console.log('(v1) this.stepsSelected.length === idx ', idx, ' + step: ', step)
                 this.setClass(idx, step)
                 return this.stepsSelected = this.steps.slice(0, idx + 1)
             } else {
-                console.log('(v2) this.stepsSelected.includes(step): ', this.stepsSelected.includes(step))
+                console.log('(v2) this.stepsSelected.includes(step): полсе', this.stepsSelected.includes(step))
                 console.log('(v2) this.stepsSelected.length === idx ', idx, ' + step: ', step)
                 this.setSteps(idx, step)
                 return this.stepsSelected = this.steps.slice(0, idx + 1)
@@ -193,7 +194,7 @@ const App = {
         },
         // Для отладки
         selectStepMapStringify(stepsSelected) {
-            return this.stepsSelectedStringify = JSON.stringify(stepsSelected, null, '...')
+            return this.stepsSelectedStringify = JSON.stringify(stepsSelected, this.replacer, this.replacerText)
         },
     },
     computed: {
