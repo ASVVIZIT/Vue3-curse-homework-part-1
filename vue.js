@@ -9,7 +9,8 @@ const AppMeta = {
         }
     }
 }
-Vue.createApp(AppMeta).mount('#meta')
+
+Vue.createApp(AppMeta).mount('#meta');
 
 const App = {
     data() {
@@ -27,7 +28,7 @@ const App = {
             btnNextOfFinish: { // У кнопки есть два режима
                 btnDefault: { // Default\Вперед
                     btnText: 'Вперед',
-                    btnTitle: 'Перейти на шаг Вперёд.'
+                    btnTitle: 'Перейти на шаг (Вперёд)'
                 },
                 btnFinish: { // Finish\Закончить
                     btnText: 'Закончить',
@@ -36,7 +37,7 @@ const App = {
             },
             btnPrev: {
                 btnText: 'Назад',
-                btnTitle: 'Перейти на шаг Назад.'
+                btnTitle: 'Перейти на шаг (Назад)'
             },
             btnReset: {
                 btnText: 'Начать заново',
@@ -85,35 +86,35 @@ const App = {
         }
     },
     created() {
-        console.log('create')
-        this.create()
+        console.log('create');
+        this.create();
     },
     updated() {
-        console.log('updated')
-        this.selectStepMapStringify(this.stepsSelected)
+        console.log('updated');
+        this.selectStepMapStringify(this.stepsSelected);
     },
     methods: {
         create() {
             // Сброс приложения при создании
-            this.reset()
-            this.selectStepMapStringify(this.stepsSelected)
+            this.reset();
+            this.selectStepMapStringify(this.stepsSelected);
         },
         reset() {
             // начать заново
-            this.activeIndex = 0
-            this.statusComponent = 'Learning'
+            this.activeIndex = 0;
+            this.statusComponent = 'Learning';
             this.selectedFirstSteps() // Высталяем первый пункт выбранным
         },
         selectedFirstSteps() {
             this.stepsSelected = this.steps.slice(this.selectStep, this.selectStep + 1)
-            this.setSteps(this.selectStep, this.steps[this.selectStep])
+            this.setSteps(this.selectStep, this.steps[this.selectStep]);
         },
         prev() {
             // когда нажимаем кнопку назад
             if (this.selectStep !== 0) {
-                this.activeIndex--
-                this.selectStepSliceElements(this.selectStep, this.steps[this.selectStep])
-                this.setSteps(this.selectStep, this.steps[this.selectStep])
+                this.activeIndex--;
+                this.selectStepSliceElements(this.selectStep, this.steps[this.selectStep]);
+                this.setSteps(this.selectStep, this.steps[this.selectStep]);
             }
         },
         nextOfFinish() {
@@ -121,19 +122,19 @@ const App = {
             if (this.statusComponent === 'Learning') {
                 if (this.nextOfFinishMode === 'Next') {
                     if ((this.selectStep !== this.steps.length - 1) && (this.stepsSelected.length < this.steps.length)) {
-                        this.activeIndex++
-                        this.statusComponent = 'Learning'
-                        this.selectStepSliceElements(this.selectStep, this.steps[this.selectStep])
-                        this.setSteps(this.selectStep, this.steps[this.selectStep])
-                        console.log('Next ', this.nextOfFinishMode)
+                        this.activeIndex++;
+                        this.statusComponent = 'Learning';
+                        this.selectStepSliceElements(this.selectStep, this.steps[this.selectStep]);
+                        this.setSteps(this.selectStep, this.steps[this.selectStep]);
+                        console.log('Next ', this.nextOfFinishMode);
                     }
                 } else if (this.nextOfFinishMode === 'Finish') {
                     if (this.selectStep === this.steps.length - 1) {
-                        this.activeIndex = this.steps.length
-                        this.statusComponent = 'Done'
-                        this.selectStepSliceElements(this.activeIndex, this.steps[this.activeIndex])
-                        this.setClass(this.activeIndex, this.steps[this.activeIndex])
-                        console.log('Finish ', this.nextOfFinishMode)
+                        this.activeIndex = this.steps.length;
+                        this.statusComponent = 'Done';
+                        this.selectStepSliceElements(this.activeIndex, this.steps[this.activeIndex]);
+                        this.setClass(this.activeIndex, this.steps[this.activeIndex]);
+                        console.log('Finish ', this.nextOfFinishMode);
                     }
                 }
             } else {
@@ -144,135 +145,135 @@ const App = {
             // когда нажимаем на определенный шаг
             if (!this.isFirstStep) {
                 this.activeIndex = idx;
-                this.setSteps(idx, step)
+                this.setSteps(idx, step);
             }
         },
         setSteps(idx, step) {
-            this.setClass(idx, step)
-            this.setContent(idx, step)
+            this.setClass(idx, step);
+            this.setContent(idx, step);
         },
         setContent(idx, step) {
             if (step !== undefined) {
-                this.titleStep = step.title
-                console.log('this.titleStep: ', this.titleStep)
-                this.textStep = step.text
-                console.log('this.textStep: ', this.textStep)
+                this.titleStep = step.title;
+                console.log('this.titleStep: ', this.titleStep);
+                this.textStep = step.text;
+                console.log('this.textStep: ', this.textStep);
             }
         },
         setClass(idx, step) {
             if ((this.stepsSelected.length === this.steps.length) && (this.nextOfFinishMode !== 'Finish')) {
-                console.log('idx != idx', idx)
-                console.log('this.stepsSelected.includes(step) != idx', this.stepsSelected.includes(step))
-                return `done`
+                console.log('idx != idx', idx);
+                console.log('this.stepsSelected.includes(step) != idx', this.stepsSelected.includes(step));
+                return `done`;
             } else if (this.selectStep === idx) {
-                console.log('idx = idx active', idx)
-                console.log('this.stepsSelected.includes(step) == idx active', this.stepsSelected.includes(step))
+                console.log('idx = idx active', idx);
+                console.log('this.stepsSelected.includes(step) == idx active', this.stepsSelected.includes(step));
                 if (this.stepsSelected.includes(step)) {
-                    return `active`
+                    return `active`;
                 }
             } else if (this.steps.length !== idx) {
                 if (this.stepsSelected.includes(step)) {
-                    return `done`
+                    return `done`;
                 }
             }
             return ``
         },
         selectStepSliceElements(idx, step) {
-            idx = this.selectStep
+            idx = this.selectStep;
             // console.log('------- this.stepsSelected.includes(step) до if: ', this.stepsSelected.includes(step))
             if (this.stepsSelected.includes(step) && (this.stepsSelected.length === idx)) {
-                console.log('(v1) this.stepsSelected.includes(step): полсе', this.stepsSelected.includes(step))
-                console.log('(v1) this.stepsSelected.length === idx ', idx, ' + step: ', step)
-                this.setClass(idx, step)
-                return this.stepsSelected = this.steps.slice(0, idx + 1)
+                console.log('(v1) this.stepsSelected.includes(step): полсе', this.stepsSelected.includes(step));
+                console.log('(v1) this.stepsSelected.length === idx ', idx, ' + step: ', step);
+                this.setClass(idx, step);
+                return this.stepsSelected = this.steps.slice(0, idx + 1);
             } else {
-                console.log('(v2) this.stepsSelected.includes(step): полсе', this.stepsSelected.includes(step))
-                console.log('(v2) this.stepsSelected.length === idx ', idx, ' + step: ', step)
-                this.setSteps(idx, step)
-                return this.stepsSelected = this.steps.slice(0, idx + 1)
+                console.log('(v2) this.stepsSelected.includes(step): полсе', this.stepsSelected.includes(step));
+                console.log('(v2) this.stepsSelected.length === idx ', idx, ' + step: ', step);
+                this.setSteps(idx, step);
+                return this.stepsSelected = this.steps.slice(0, idx + 1);
             }
         },
         // Для отладки
         selectStepMapStringify(stepsSelected) {
-            return this.stepsSelectedStringify = JSON.stringify(stepsSelected, this.replacer, this.replacerText)
+            return this.stepsSelectedStringify = JSON.stringify(stepsSelected, this.replacer, this.replacerText);
         },
     },
     computed: {
         // тут стоит определить несколько свойств:
         // 1. текущий выбранный шаг
         selectStep: function () {
-            return this.activeIndex
+            return this.activeIndex;
         },
         // 2. выключена ли кнопка назад
         isDisabledBtnPrev: function () {
             if (this.stepsSelected.length - 1) {
-                return false
+                return false;
             } else {
-                return true
+                return true;
             }
         },
         isVisibleBtnPrev: function () {
             if (this.statusComponent === 'Done') {
-                return false
+                return false;
             } else {
-                return true
+                return true;
             }
         },
         isContentNotEmpty: function () {
             if ((this.titleStep === undefined) && (this.textStep === undefined) && (this.emptyStep !== '')) {
-                return false
+                return false;
             } else {
-                return true
+                return true;
             }
         },
         isTitleStepNotEmpty: function () {
             if ((this.titleStep === undefined)) {
-                return false
+                return false;
             } else {
-                return true
+                return true;
             }
         },
         isTextStepNotEmpty: function () {
             if ((this.textStep === undefined)) {
-                return false
+                return false;
             } else {
-                return true
+                return true;
             }
         },
         // 3. находимся ли мы на последнем шаге
         isStepLast: function () {
             if (this.selectStep === this.steps.length - 1) {
-                return true
+                return true;
             } else {
-                return false
+                return false;
             }
         },
         // 3.1 находимся ли мы на первом шаге
         isFirstStep: function () {
             if (this.selectStep >= this.steps.length) {
-                return true
+                return true;
             } else {
-                return false
+                return false;
             }
         },
         // 4. Выбор кнопки Next или Finish или NewLearning
         toggleBtnNextOfFinish: function () {
             if (this.statusComponent === 'Learning') {
                 if (this.isStepLast) {
-                    this.nextOfFinishMode = 'Finish'
+                    this.nextOfFinishMode = 'Finish';
                     return {
                         textBtn: this.btnNextOfFinish.btnFinish.btnText,
                         titleBtn: this.btnNextOfFinish.btnFinish.btnTitle
                     }
                 } else {
-                    this.nextOfFinishMode = 'Next'
+                    this.nextOfFinishMode = 'Next';
                     return {
                         textBtn: this.btnNextOfFinish.btnDefault.btnText,
                         titleBtn: this.btnNextOfFinish.btnDefault.btnTitle
                     }
                 }
             } else {
-                this.statusComponent = 'Done'
+                this.statusComponent = 'Done';
                 return {
                     textBtn: this.btnNewLearning.btnText,
                     titleBtn: this.btnNewLearning.btnTitle
@@ -282,6 +283,6 @@ const App = {
     }
 }
 
-Vue.createApp(App).mount('#app')
+Vue.createApp(App).mount('#app');
 
 
